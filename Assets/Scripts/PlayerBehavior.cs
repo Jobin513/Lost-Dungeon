@@ -1,52 +1,43 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    private float speed = 1f;
+    [Serializefield] private float speed = 4f;
     // private float horizontalMovement;
     // private float verticalMovement;
     private Rigidbody2D rb;
+    private Vector3 movement;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 60;
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        // horizontalMovement = Input.GetAxis("Horizontal") * speed;
-        // verticalMovement = Input.GetAxis("Vertical") * speed;
+        movement = Vector3.zero;
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+        Debug.Log(movement);
+        if(movement != Vector3.zero)
+        {
+            movePlayer();
+        }
+        
 
-
-        /*if (horizontalMovement > 0.1f || horizontalMovement < -0.1f) {
-            rb.AddForce(new Vector2(horizontalMovement, 0), ForceMode2D.Impulse);
+        void movePlayer() {
+            rb.MovePosition(transform.position + movement * speed * Time.fixedDeltaTime);
         }
-        */
-
-        if (Input.GetKeyDown("w")) {
-            this.transform.Translate(new Vector3(0, speed , 0) * Time.deltaTime, Space.World);
-        }
-        if (Input.GetKeyDown("a"))
-        {
-            this.transform.Translate(new Vector3(-speed , 0, 0) * Time.deltaTime, Space.World);
-        }
-        if (Input.GetKeyDown("s"))
-        {
-            this.transform.Translate(new Vector3(0, -speed , 0) * Time.deltaTime, Space.World);
-        }
-        if (Input.GetKeyDown("d"))
-        {
-            this.transform.Translate(new Vector3(speed , 0, 0) *Time.deltaTime, Space.World);
-        }
-        /*if (verticalMovement > 0.1f || verticalMovement < -0.1f)
-        {
-            rb.AddForce(new Vector2(0, verticalMovement), ForceMode2D.Impulse);
-            //rb.transform.Translate(new Vector2(0, speed));
-        }*/
     }
+}
+
+internal class SerializefieldAttribute : Attribute
+{
 }
