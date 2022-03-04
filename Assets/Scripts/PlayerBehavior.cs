@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    [Serializefield] private float speed = 4f;
+    [SerializeField] private float speed = 4f;
     // private float horizontalMovement;
     // private float verticalMovement;
     private Rigidbody2D rb;
@@ -25,7 +25,7 @@ public class PlayerBehavior : MonoBehaviour
         movement = Vector3.zero;
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        Debug.Log(movement);
+        //Debug.Log(movement);
         if(movement != Vector3.zero)
         {
             movePlayer();
@@ -36,8 +36,26 @@ public class PlayerBehavior : MonoBehaviour
             rb.MovePosition(transform.position + movement * speed * Time.fixedDeltaTime);
         }
     }
+
+
+
+
+    public void FindNewLocation(DoorBehavior initialDoor)
+    {
+
+        GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
+        GameObject targetDoor = null;
+        Debug.Log("number of doors:  " + doors.Length);
+        for (int i = 0; i < doors.Length; i++)
+        {
+            if (doors[i].GetComponent<DoorBehavior>().id == initialDoor.targetid)
+            {
+                Debug.Log("this happened");
+                targetDoor = doors[i];
+            }
+        }
+        Debug.Log("Spawn Position:  " + targetDoor.GetComponent<DoorBehavior>().tran.position);
+        this.transform.position = targetDoor.GetComponent<DoorBehavior>().tran.position;
+    }
 }
 
-internal class SerializefieldAttribute : Attribute
-{
-}
