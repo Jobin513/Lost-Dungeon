@@ -32,6 +32,7 @@ public class DoorBehavior : MonoBehaviour
             DontDestroyOnLoad(collision);
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             player.GetComponent<PlayerBehavior>().FindNewLocation(this);
+            Debug.Log("trigger enter end");
         }
     }
 }

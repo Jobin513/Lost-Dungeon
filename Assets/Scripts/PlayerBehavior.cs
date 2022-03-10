@@ -35,6 +35,7 @@ public class PlayerBehavior : MonoBehaviour
         void movePlayer() {
             rb.MovePosition(transform.position + movement * speed * Time.fixedDeltaTime);
         }
+        //Debug.Log(this.transform.position);
     }
 
 
@@ -45,17 +46,18 @@ public class PlayerBehavior : MonoBehaviour
 
         GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
         GameObject targetDoor = null;
-        Debug.Log("number of doors:  " + doors.Length);
+        //Debug.Log("number of doors:  " + doors.Length);
         for (int i = 0; i < doors.Length; i++)
         {
             if (doors[i].GetComponent<DoorBehavior>().id == initialDoor.targetid)
             {
-                Debug.Log("this happened");
+                //Debug.Log("this happened");
                 targetDoor = doors[i];
             }
         }
         Debug.Log("Spawn Position:  " + targetDoor.GetComponent<DoorBehavior>().tran.position);
-        this.transform.position = targetDoor.GetComponent<DoorBehavior>().tran.position;
+        transform.position = targetDoor.GetComponent<DoorBehavior>().tran.position;
+        Debug.Log(transform.position);
     }
 }
 
