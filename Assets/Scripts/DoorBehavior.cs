@@ -28,10 +28,11 @@ public class DoorBehavior : MonoBehaviour
         if (collision.tag == "Player")
         {
 
-            SceneManager.LoadScene(targetSceneNum);
-            DontDestroyOnLoad(collision);
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            player.GetComponent<PlayerBehavior>().FindNewLocation(this);
+            player.GetComponent<PlayerBehavior>().SetTargetDoor(targetid);
+
+            SceneManager.LoadScene(targetSceneNum);
+            
             Debug.Log("trigger enter end");
         }
     }

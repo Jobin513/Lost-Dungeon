@@ -10,13 +10,15 @@ public class PlayerBehavior : MonoBehaviour
     // private float verticalMovement;
     private Rigidbody2D rb;
     private Vector3 movement;
-
+    private int targetDoor;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         Application.targetFrameRate = 60;
         rb = GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
@@ -39,24 +41,40 @@ public class PlayerBehavior : MonoBehaviour
     }
 
 
+    public int GetTargetDoor()
+    {
+        return targetDoor;
+    }
 
 
-    public void FindNewLocation(DoorBehavior initialDoor)
+    public void SetTargetDoor(int sceneNum)
+    {
+        targetDoor = sceneNum;
+    }
+
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+
+    public void FindNewLocation()
     {
 
         GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
-        GameObject targetDoor = null;
+        GameObject targetDoorObject = null;
         //Debug.Log("number of doors:  " + doors.Length);
         for (int i = 0; i < doors.Length; i++)
         {
-            if (doors[i].GetComponent<DoorBehavior>().id == initialDoor.targetid)
+            if (doors[i].GetComponent<DoorBehavior>().id == GetTargetDoor())
             {
                 //Debug.Log("this happened");
-                targetDoor = doors[i];
+                targetDoorObject = doors[i];
             }
         }
-        Debug.Log("Spawn Position:  " + targetDoor.GetComponent<DoorBehavior>().tran.position);
-        transform.position = targetDoor.GetComponent<DoorBehavior>().tran.position;
+        Debug.Log("Spawn Position:  " + targetDoorObject.GetComponent<DoorBehavior>().tran.position);
+        transform.position = targetDoorObject.GetComponent<DoorBehavior>().tran.position;
         Debug.Log(transform.position);
     }
 }
