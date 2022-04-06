@@ -11,7 +11,7 @@ public class PlayerBehavior : MonoBehaviour
     private Rigidbody2D rb;
     private Vector3 movement;
     private int targetDoor;
-    [SerializeField] private int hp = 10;
+    //[SerializeField] private int hp = 10;
 
 
     // Start is called before the first frame update
@@ -29,7 +29,7 @@ public class PlayerBehavior : MonoBehaviour
         movement = Vector3.zero;
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        //Debug.Log(movement);
+        
         if(movement != Vector3.zero)
         {
             movePlayer();
@@ -60,7 +60,8 @@ public class PlayerBehavior : MonoBehaviour
     {
         if ((collision.gameObject.tag == "EnemyAttack") || (collision.gameObject.tag == "Enemy"))
         {
-            hp -= 1;
+            Health playerHP = GetComponent<Health>();
+            playerHP.Damage(1);
         }
     }
 
