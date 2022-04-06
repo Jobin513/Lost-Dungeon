@@ -13,6 +13,7 @@ public class AttackArea : MonoBehaviour
         {
             Health hp = collision.GetComponent<Health>();
             hp.Damage(damage);
+            
         }
     }
 }
