@@ -5,34 +5,61 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/Floor 1.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/Floor 3.unity
+  - enabled: 0
+    path: Assets/Scenes/Old Floors/Floor 3.unity
     guid: 745e19a598a7760479f093fbd253917c
-  - enabled: 1
-    path: Assets/Scenes/Floor 2.unity
+  - enabled: 0
+    path: Assets/Scenes/Old Floors/Floor 2.unity
     guid: 9800fe8c0c7e5b14a95b15628b285220
-  - enabled: 1
-    path: Assets/Scenes/Floor 4.unity
+  - enabled: 0
+    path: Assets/Scenes/Old Floors/Floor 4.unity
     guid: 89deeefa3b2f72e4aa8287ae1cad00af
-  - enabled: 1
-    path: Assets/Scenes/Floor 5.unity
+  - enabled: 0
+    path: Assets/Scenes/Old Floors/Floor 5.unity
     guid: bf8d54df62fa38c4288912f1d753567a
-  - enabled: 1
-    path: Assets/Scenes/Floor 6.unity
+  - enabled: 0
+    path: Assets/Scenes/Old Floors/Floor 6.unity
     guid: 2bc4f5098ddb2c349b5bee7bcfe99d85
-  - enabled: 1
-    path: Assets/Scenes/Floor 7.unity
+  - enabled: 0
+    path: Assets/Scenes/Old Floors/Floor 7.unity
     guid: f6513d68bb2891e4bbae364d776c6b55
-  - enabled: 1
-    path: Assets/Scenes/Floor 8.unity
+  - enabled: 0
+    path: Assets/Scenes/Old Floors/Floor 8.unity
     guid: 612795e4dd0a54d4b9aafa9fd4c9901c
-  - enabled: 1
-    path: Assets/Scenes/Floor 9.unity
+  - enabled: 0
+    path: Assets/Scenes/Old Floors/Floor 9.unity
     guid: 7caf3ef91fd009b45b0826591b0a14c3
-  - enabled: 1
-    path: Assets/Scenes/Floor 10.unity
+  - enabled: 0
+    path: Assets/Scenes/Old Floors/Floor 10.unity
     guid: c4c019e5d01724f4483737c9787218a6
+  - enabled: 1
+    path: Assets/Scenes/Floor 1 New.unity
+    guid: c009304500ea167449b88a3299e0cd82
+  - enabled: 1
+    path: Assets/Scenes/Floor 2 New.unity
+    guid: d64eed948d912614fa3ad9d20aaf0f01
+  - enabled: 1
+    path: Assets/Scenes/Floor 3 New.unity
+    guid: 08affded5a6a7fc42b78fb545642cf0f
+  - enabled: 1
+    path: Assets/Scenes/Floor 4 New.unity
+    guid: be070dcc67037de47b160efcba7bc9ca
+  - enabled: 1
+    path: Assets/Scenes/Floor 5 New.unity
+    guid: d752abb613010704a934e07484220d53
+  - enabled: 1
+    path: Assets/Scenes/Floor 6 New.unity
+    guid: a7854332eae764b489b4ccb73e3fa7dc
+  - enabled: 1
+    path: Assets/Scenes/Floor 7 New.unity
+    guid: e296526ba830649468753c28cd14afc5
+  - enabled: 1
+    path: Assets/Scenes/Floor 8 New.unity
+    guid: 229a9cb7d6b6263418a63a9e10c11868
+  - enabled: 1
+    path: Assets/Scenes/Floor 9 New.unity
+    guid: c66802b189fc52348b7e0f08baff8b1e
+  - enabled: 1
+    path: Assets/Scenes/Floor 10 New.unity
+    guid: 4abaca45b2a432643bad644b98048d0b
   m_configObjects: {}
