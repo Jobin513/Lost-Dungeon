@@ -11,6 +11,8 @@ public class PlayerBehavior : MonoBehaviour
     private Rigidbody2D rb;
     private Vector3 movement;
     private int targetDoor;
+    //[SerializeField] private int hp = 10;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,19 +29,41 @@ public class PlayerBehavior : MonoBehaviour
         movement = Vector3.zero;
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        //Debug.Log(movement);
+        
         if(movement != Vector3.zero)
         {
             movePlayer();
         }
-        
 
-        void movePlayer() {
-            rb.MovePosition(transform.position + movement * speed * Time.fixedDeltaTime);
+        if (movement.x > 0)
+        {
+            gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
-        //Debug.Log(this.transform.position);
+        else if(movement.x < 0)
+        {
+            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+        }
+
     }
 
+
+
+    void movePlayer()
+    {
+        rb.MovePosition(transform.position + movement * speed * Time.fixedDeltaTime);
+
+    }
+
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if ((collision.gameObject.tag == "Enemy"))
+        {
+            Health playerHP = GetComponent<Health>();
+            playerHP.Damage(1);
+        }
+    }
 
     public int GetTargetDoor()
     {
