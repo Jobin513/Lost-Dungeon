@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3020008068766506477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 136647264661535726}
+  m_Layer: 0
+  m_Name: ArrowSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &136647264661535726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3020008068766506477}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8814845040253258718}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5611930443134248753
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,9 +41,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3296029746436657491}
   - component: {fileID: 5781485698987180209}
-  - component: {fileID: 8782108417330266804}
+  - component: {fileID: 1875223047884028015}
   m_Layer: 0
-  m_Name: AttackArea
+  m_Name: SwordArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +92,7 @@ PolygonCollider2D:
     - - {x: 1.5, y: 0.75}
       - {x: 0.5, y: 0}
       - {x: 1.5, y: -0.75}
---- !u!114 &8782108417330266804
+--- !u!114 &1875223047884028015
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,7 +101,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5611930443134248753}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f852d5bcde1ab6042b48e2cd8cc06a9d, type: 3}
+  m_Script: {fileID: 11500000, guid: fb93d877db899f149806f20f5876c630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8814845040253258719
@@ -108,6 +139,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3296029746436657491}
+  - {fileID: 136647264661535726}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -235,6 +267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b7d2a2b6a74004da4e8734b67aad07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 3257242134636382511, guid: d01b32a0f6f645540a29343877e6afaa, type: 3}
+  arrowOffset: {fileID: 136647264661535726}
 --- !u!114 &389985014457424374
 MonoBehaviour:
   m_ObjectHideFlags: 0

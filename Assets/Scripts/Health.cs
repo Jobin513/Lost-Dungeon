@@ -6,6 +6,16 @@ public class Health : MonoBehaviour
 {
     [SerializeField] int hp;
 
+
+    private void Update()
+    {
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
     public int GetHealth()
     {
         return hp;

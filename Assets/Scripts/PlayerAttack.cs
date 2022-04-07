@@ -9,11 +9,19 @@ public class PlayerAttack : MonoBehaviour
 
     private bool attacking = false;
 
-    private float timeToAttack = 0.25f;
+    private float timeToAttack = 0.5f;
     private float timer = 0f;
+
+
+
     private bool sword = false;
     private bool bow = false;
     private bool shield = false;
+
+    public BowBehavior arrowPrefab;
+    public Transform arrowOffset;
+
+
 
 
     // Start is called before the first frame update
@@ -26,15 +34,15 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SetWeapon(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SetWeapon(2);
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad3))
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SetWeapon(3);
         }
@@ -62,18 +70,21 @@ public class PlayerAttack : MonoBehaviour
     {
         if (weaponNum == 1)
         {
+            Debug.Log("sword in use");
             sword = true;
             bow = false;
             shield = false;
         }
         else if (weaponNum == 2)
         {
+            Debug.Log("bow in use");
             sword = false;
             bow = true;
             shield = false;
         }
         else if (weaponNum == 3)
         {
+            Debug.Log("shield in use");
             sword = false;
             bow = false;
             shield = true;
@@ -82,6 +93,18 @@ public class PlayerAttack : MonoBehaviour
     private void Attack()
     {
         attacking = true;
-        attackArea.SetActive(attacking);
+        if (sword == true)
+        {
+            attackArea.SetActive(attacking);
+        }
+        else if (bow == true)
+        {
+            Instantiate(arrowPrefab, arrowOffset.position, transform.rotation);
+        }
+        else if (shield == true)
+        {
+
+        }
+        
     }
 }
