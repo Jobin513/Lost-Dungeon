@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BowBehavior : MonoBehaviour
 {
-    private float speed = 3f;
+    private float speed = 6f;
 
     private int damage = 1;
 

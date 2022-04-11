@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
 
     private bool attacking = false;
 
-    private float timeToAttack = 0.5f;
+    private float timeToAttack = .25f;
     private float timer = 0f;
 
 
@@ -29,6 +29,7 @@ public class PlayerAttack : MonoBehaviour
     {
 
         attackArea = transform.GetChild(0).gameObject;
+        SetWeapon(1);
     }
 
     // Update is called once per frame
