@@ -4,16 +4,34 @@ using UnityEngine;
 
 public class BowBehavior : MonoBehaviour
 {
-    private float speed = 3f;
+    private float speed = 10f;
+
+    private int scale;
 
     private int damage = 1;
 
+    private GameObject player;
+    public SpriteRenderer spr;
 
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        
+        scale = player.GetComponent<PlayerBehavior>().getDirection();
+        if (scale == -1)
+        {
+            spr.flipX = true;
+        }
+        else
+        {
+            spr.flipX = false;
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += transform.right * Time.deltaTime * speed;
+        transform.position += transform.right * Time.deltaTime * speed * scale;
     }
 
 
