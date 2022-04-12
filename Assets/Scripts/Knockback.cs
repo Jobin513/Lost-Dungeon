@@ -22,7 +22,8 @@ public class Knockback : MonoBehaviour
     { 
         if(other.gameObject.CompareTag("enemy"))
         {
-            Rigidbody2D enemy = other.GetComponent<RigidBody2D>();
+
+            Rigidbody2D enemy = other.GetComponent<Rigidbody2D>();
             if(enemy != null)
             {
                 enemy.isKinematic = false;
