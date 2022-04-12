@@ -13,6 +13,7 @@ public class SwordBehavior : MonoBehaviour
         {
             Health hp = collision.GetComponent<Health>();
             hp.Damage(damage);
+            Debug.Log("damage done");
 
         }
     }

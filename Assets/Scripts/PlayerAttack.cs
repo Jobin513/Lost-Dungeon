@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
 
-    private GameObject attackArea = default;
-
+    public GameObject swordArea;
+    public GameObject shieldArea;
     private bool attacking = false;
 
-    private float timeToAttack = .25f;
+    private float timeToAttack = .5f;
     private float timer = 0f;
 
 
@@ -18,6 +18,8 @@ public class PlayerAttack : MonoBehaviour
     private bool bow = false;
     private bool shield = false;
 
+
+    public Animator animator;
     public BowBehavior arrowPrefab;
     public Transform arrowOffset;
 
@@ -28,7 +30,8 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
 
-        attackArea = transform.GetChild(0).gameObject;
+        //swordArea = transform.GetChild(0).gameObject;
+        //shieldArea = transform.GetChild(2).gameObject;
         SetWeapon(1);
     }
 
@@ -48,21 +51,22 @@ public class PlayerAttack : MonoBehaviour
             SetWeapon(3);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && attacking == false)
         {
             Attack();
+            Debug.Log("attack made");
         }
 
         if (attacking)
         {
-            Debug.Log("attack made");
+            //Debug.Log("attack made");
             timer += Time.deltaTime;
 
             if (timer >= timeToAttack)
             {
                 timer = 0;
                 attacking = false;
-                attackArea.SetActive(attacking);
+                //attackArea.SetActive(attacking);
             }
         }
     }
@@ -96,7 +100,8 @@ public class PlayerAttack : MonoBehaviour
         attacking = true;
         if (sword == true)
         {
-            attackArea.SetActive(attacking);
+            animator.SetTrigger("Attack1");
+            swordArea.SetActive(attacking);
         }
         else if (bow == true)
         {
@@ -104,7 +109,8 @@ public class PlayerAttack : MonoBehaviour
         }
         else if (shield == true)
         {
-
+            animator.SetTrigger("Block");
+            shieldArea.SetActive(attacking);
         }
         
     }

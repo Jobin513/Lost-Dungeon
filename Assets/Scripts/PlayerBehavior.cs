@@ -8,9 +8,12 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private float speed = 4f;
     // private float horizontalMovement;
     // private float verticalMovement;
+
+    private int direction;
     private Rigidbody2D rb;
     private Vector3 movement;
     private int targetDoor;
+    public Animator animator;
     //[SerializeField] private int hp = 10;
 
 
@@ -29,18 +32,25 @@ public class PlayerBehavior : MonoBehaviour
         movement = Vector3.zero;
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        
-        if(movement != Vector3.zero)
+
+        if (movement != Vector3.zero)
         {
+            //animator.SetFloat("Run", movement);
             movePlayer();
+        }
+        else
+        {
+            animator.SetInteger("AnimState", 0);
         }
 
         if (movement.x > 0)
         {
+            direction = 1;
             gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
         else if(movement.x < 0)
         {
+            direction = -1;
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
         }
 
@@ -48,8 +58,14 @@ public class PlayerBehavior : MonoBehaviour
 
 
 
+    public int getDirection()
+    {
+        return direction;
+    }
+
     void movePlayer()
     {
+        animator.SetInteger("AnimState", 1);
         rb.MovePosition(transform.position + movement * speed * Time.fixedDeltaTime);
 
     }
