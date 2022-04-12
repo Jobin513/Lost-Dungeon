@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bandit : Enemy
-{
+public class Bandit : Enemy {
 
     [SerializeField] float      m_speed = 4.0f;
     [SerializeField] float      m_jumpForce = 7.5f;
@@ -34,7 +33,6 @@ public class Bandit : Enemy
             && Vector3.Distance(target.position, transform.position) > attackRadius)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, m_speed * Time.deltaTime);
-           
         }
     }
 
@@ -55,18 +53,17 @@ public class Bandit : Enemy
             m_animator.SetBool("Grounded", m_grounded);
         }
 
-        // -- Handle input and movement 
-    float inputX = Input.GetAxis("Horizontal");
+        // -- Handle input and movement --
+        float inputX = Input.GetAxis("Horizontal");
 
-        //  Swap direction of sprite depending on walk direction
-       
+        // Swap direction of sprite depending on walk direction
         if (inputX > 0)
             transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         else if (inputX < 0)
-            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f); 
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
         // Move
-      m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
+        m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
 
         //Set AirSpeed in animator
         m_animator.SetFloat("AirSpeed", m_body2d.velocity.y);
@@ -105,8 +102,8 @@ public class Bandit : Enemy
         }
 
         //Run
-    else if (Mathf.Abs(inputX) > Mathf.Epsilon)
-            m_animator.SetInteger("AnimState", 2); 
+        else if (Mathf.Abs(inputX) > Mathf.Epsilon)
+            m_animator.SetInteger("AnimState", 2);
 
         //Combat Idle
         else if (m_combatIdle)
