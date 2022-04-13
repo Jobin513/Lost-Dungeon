@@ -204,6 +204,7 @@ MonoBehaviour:
   moveSpeed: 2
   m_speed: 2
   m_jumpForce: 0
+  swordArea: {fileID: 0}
   target: {fileID: 8814845040253258718, guid: 08b7082ad3ec85340a733f7a7f12c02a, type: 3}
   chaseRadius: 3
   attackRadius: 1
@@ -221,6 +222,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 2
+--- !u!114 &160318799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160318796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb93d877db899f149806f20f5876c630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &272449855
 GameObject:
   m_ObjectHideFlags: 0

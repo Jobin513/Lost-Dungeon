@@ -5,23 +5,27 @@ public class Bandit : Enemy {
 
     [SerializeField] float      m_speed = 4.0f;
     [SerializeField] float      m_jumpForce = 7.5f;
-
+  
+    public GameObject swordArea;
     public Transform target;
     public float chaseRadius;
     public float attackRadius;
     public Transform homePosition;
-
+    private bool attacking = false;
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
     private Sensor_Bandit       m_groundSensor;
     private bool                m_grounded = false;
     private bool                m_combatIdle = false;
     private bool                m_isDead = false;
+    private float timeToAttack = .5f;
+    private float timer = 0f;
 
     // Use this for initialization
     void Start () {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
+
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_Bandit>();
 
         target = GameObject.FindWithTag("Player").transform;
@@ -33,14 +37,42 @@ public class Bandit : Enemy {
             && Vector3.Distance(target.position, transform.position) > attackRadius)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, m_speed * Time.deltaTime);
+           
         }
     }
+    private void Attack()
+    {
+        attacking = true;
+        m_animator.SetTrigger("Attack");
+        if (attacking)
+        {
+ 
+            timer += Time.deltaTime;
 
-	
-	// Update is called once per frame
-	void Update () {
+            if (timer >= timeToAttack)
+            {
+                timer = 0;
+                attacking = false;
+                //attackArea.SetActive(attacking);
+            }
+        }
+    }
+    private void changeAnim(Vector2 direction)
+    {
+
+    }
+
+        // Update is called once per frame
+        void Update () {
         CheckDistance();
 
+
+        if (Vector3.Distance(target.position, transform.position) <= attackRadius && attacking == false)
+        {
+            Attack();
+            Debug.Log("enemy attack made");
+        }
+        
         //Check if character just landed on the ground
         if (!m_grounded && m_groundSensor.State()) {
             m_grounded = true;
