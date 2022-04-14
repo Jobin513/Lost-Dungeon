@@ -3,104 +3,79 @@ using System.Collections;
 
 public class Bandit : Enemy {
 
-    [SerializeField] float      m_speed = 4.0f;
-    [SerializeField] float      m_jumpForce = 7.5f;
+ [SerializeField] float      m_speed = 4.0f;
   
-    public GameObject swordArea;
+    public GameObject swordArea; 
     public Transform target;
     public float chaseRadius;
     public float attackRadius;
     public Transform homePosition;
-    private bool attacking = false;
+    private Vector3 movement;
+    private bool attacking = false; 
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
-    private Sensor_Bandit       m_groundSensor;
-    private bool                m_grounded = false;
     private bool                m_combatIdle = false;
     private bool                m_isDead = false;
-    private float timeToAttack = .5f;
+    private float timeToAttack = 1.5f;
     private float timer = 0f;
-
+    private float direction;
+    private float oldposition;
+    private float minDist;
+    private Vector3 initialPosition;
     // Use this for initialization
     void Start () {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
-
-        m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_Bandit>();
-
         target = GameObject.FindWithTag("Player").transform;
+        oldposition = transform.position.x;   
+        initialPosition = transform.position;
     }
+   
+    // Update is called once per frame
+    void Update () {
+        CheckDistance();
+        DeathAnimation();
+       
 
-    void CheckDistance()
-    {
-        if(Vector3.Distance(target.position, transform.position) <= chaseRadius
-            && Vector3.Distance(target.position, transform.position) > attackRadius)
+        // Moving Left
+        if (transform.position.x > oldposition)
+            {
+                    transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                }
+            
+                  //Moving Right
+                if (transform.position.x < oldposition)
+            {
+                    transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                }
+
+        oldposition = transform.position.x;
+
+      if (attacking)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, m_speed * Time.deltaTime);
            
-        }
-    }
-    private void Attack()
-    {
-        attacking = true;
-        m_animator.SetTrigger("Attack");
-        if (attacking)
-        {
- 
+            Debug.Log("enemy attack made");
             timer += Time.deltaTime;
 
             if (timer >= timeToAttack)
             {
                 timer = 0;
+                m_animator.SetTrigger("Attack");
                 attacking = false;
-                //attackArea.SetActive(attacking);
+                swordArea.SetActive(attacking);
             }
         }
-    }
-    private void changeAnim(Vector2 direction)
-    {
 
-    }
-
-        // Update is called once per frame
-        void Update () {
-        CheckDistance();
-
-
-        if (Vector3.Distance(target.position, transform.position) <= attackRadius && attacking == false)
+      if (Vector3.Distance(target.position, transform.position) <= attackRadius && attacking == false)
         {
+            
             Attack();
+           // attacking = true;
             Debug.Log("enemy attack made");
         }
-        
-        //Check if character just landed on the ground
-        if (!m_grounded && m_groundSensor.State()) {
-            m_grounded = true;
-            m_animator.SetBool("Grounded", m_grounded);
-        }
-
-        //Check if character just started falling
-        if(m_grounded && !m_groundSensor.State()) {
-            m_grounded = false;
-            m_animator.SetBool("Grounded", m_grounded);
-        }
-
-        // -- Handle input and movement --
-        float inputX = Input.GetAxis("Horizontal");
-
-        // Swap direction of sprite depending on walk direction
-        if (inputX > 0)
-            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-        else if (inputX < 0)
-            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-
-        // Move
-        m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
-
-        //Set AirSpeed in animator
-        m_animator.SetFloat("AirSpeed", m_body2d.velocity.y);
 
         // -- Handle Animations --
+
         //Death
         if (Input.GetKeyDown("e")) {
             if(!m_isDead)
@@ -110,39 +85,62 @@ public class Bandit : Enemy {
 
             m_isDead = !m_isDead;
         }
-            
+
         //Hurt
-        else if (Input.GetKeyDown("q"))
-            m_animator.SetTrigger("Hurt");
-
-        //Attack
-        else if(Input.GetMouseButtonDown(0)) {
-            m_animator.SetTrigger("Attack");
-        }
-
-        //Change between idle and combat idle
-        else if (Input.GetKeyDown("f"))
-            m_combatIdle = !m_combatIdle;
-
-        //Jump
-        else if (Input.GetKeyDown("space") && m_grounded) {
-            m_animator.SetTrigger("Jump");
-            m_grounded = false;
-            m_animator.SetBool("Grounded", m_grounded);
-            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
-            m_groundSensor.Disable(0.2f);
-        }
-
-        //Run
-        else if (Mathf.Abs(inputX) > Mathf.Epsilon)
-            m_animator.SetInteger("AnimState", 2);
-
+     //   else if (banditHP.GetHealth())
+     //       m_animator.SetTrigger("Hurt");
+               
         //Combat Idle
-        else if (m_combatIdle)
+      /*  else if (m_combatIdle)
             m_animator.SetInteger("AnimState", 1);
 
         //Idle
         else
             m_animator.SetInteger("AnimState", 0);
+      */
+    }
+
+   private void DeathAnimation()
+    {
+        Health enemyHP = GetComponent<Health>();
+        if (enemyHP.GetHealth() == 0)
+            {
+            m_isDead = true;
+            m_animator.SetTrigger("Death");
+            }
+        
+    }
+    void CheckDistance()
+    {
+        //If player is in chase radius follow the player
+        if (Vector3.Distance(target.position, transform.position) <= chaseRadius
+            && Vector3.Distance(target.position, transform.position) > attackRadius)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, target.position, m_speed * Time.deltaTime);
+            m_animator.SetInteger("AnimState", 2);
+
+        }
+        //If player is past the chaseradius go back to idle animation
+        if (Vector3.Distance(target.position, transform.position) >= chaseRadius)
+        {
+            m_animator.SetInteger("AnimState", 1);
+        }
+    }
+    private void Attack()
+    {
+        attacking = true;
+
+        if (attacking)
+        {
+            m_animator.SetTrigger("Attack");
+            timer += Time.deltaTime;
+
+            if (timer >= timeToAttack)
+            {
+                timer = 0;
+                attacking = false;
+                swordArea.SetActive(attacking);
+            }
+        }
     }
 }

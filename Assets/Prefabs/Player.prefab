@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 3527366637805963366}
   - component: {fileID: 389985014457424374}
   - component: {fileID: 8482568505135529970}
+  - component: {fileID: -5525562304927486000}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -285,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a064f6917e40c1a4c964afce531b935d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 5
+  hp: 10
 --- !u!95 &8482568505135529970
 Animator:
   serializedVersion: 4
@@ -306,6 +307,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-5525562304927486000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8814845040253258719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78510d6401e875d45926b39b4366d88a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thrust: 4
+  knockTime: 0.4
 --- !u!1001 &7689244045856926239
 PrefabInstance:
   m_ObjectHideFlags: 0
