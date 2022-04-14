@@ -7,8 +7,9 @@ public class PlayerAttack : MonoBehaviour
 
     public GameObject swordArea;
     public GameObject shieldArea;
-    private bool attacking = false;
+    public Transform attackPoint;
 
+    private bool attacking = false;
     private float timeToAttack = .5f;
     private float timer = 0f;
 
@@ -95,13 +96,15 @@ public class PlayerAttack : MonoBehaviour
             shield = true;
         }
     }
-    private void Attack()
+    void Attack()
     {
         attacking = true;
         if (sword == true)
         {
             animator.SetTrigger("Attack1");
             swordArea.SetActive(attacking);
+
+            
         }
         else if (bow == true)
         {

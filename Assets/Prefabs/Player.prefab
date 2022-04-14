@@ -270,8 +270,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b7d2a2b6a74004da4e8734b67aad07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swordArea: {fileID: 5611930443134248753}
-  shieldArea: {fileID: 4087889746785729839}
+  swordArea: {fileID: 2833955732882279726, guid: 00e5a0c1e88b5c94885f4c590103a246, type: 3}
+  shieldArea: {fileID: 0}
+  attackPoint: {fileID: 0}
   animator: {fileID: 8482568505135529970}
   arrowPrefab: {fileID: 3257242134636382511, guid: d01b32a0f6f645540a29343877e6afaa, type: 3}
   arrowOffset: {fileID: 136647264661535726}
@@ -382,10 +383,5 @@ PrefabInstance:
 --- !u!4 &3296029746436657491 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5118472021158443852, guid: 00e5a0c1e88b5c94885f4c590103a246, type: 3}
-  m_PrefabInstance: {fileID: 7689244045856926239}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5611930443134248753 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2833955732882279726, guid: 00e5a0c1e88b5c94885f4c590103a246, type: 3}
   m_PrefabInstance: {fileID: 7689244045856926239}
   m_PrefabAsset: {fileID: 0}

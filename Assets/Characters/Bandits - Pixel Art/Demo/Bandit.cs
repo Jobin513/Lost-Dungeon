@@ -1,84 +1,86 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bandit : Enemy {
+public class Bandit : Enemy
+{
 
- [SerializeField] float      m_speed = 4.0f;
-  
-    public GameObject swordArea; 
+    [SerializeField] float m_speed = 4.0f;
+
+    public GameObject swordArea;
     public Transform target;
     public float chaseRadius;
     public float attackRadius;
     public Transform homePosition;
-    private Vector3 movement;
-    private bool attacking = false; 
-    private Animator            m_animator;
-    private Rigidbody2D         m_body2d;
-    private bool                m_combatIdle = false;
-    private bool                m_isDead = false;
+
+    private bool attacking = false;
+    private Animator m_animator;
+    private Rigidbody2D m_body2d;
+    private bool m_isDead = false;
     private float timeToAttack = 1.5f;
     private float timer = 0f;
-    private float direction;
     private float oldposition;
-    private float minDist;
     private Vector3 initialPosition;
+
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         target = GameObject.FindWithTag("Player").transform;
-        oldposition = transform.position.x;   
+        oldposition = transform.position.x;
         initialPosition = transform.position;
     }
-   
+
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         CheckDistance();
         DeathAnimation();
-       
+
+        // if (m_body2d.isKinematic == true) {
 
         // Moving Left
         if (transform.position.x > oldposition)
-            {
-                    transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-                }
-            
-                  //Moving Right
-                if (transform.position.x < oldposition)
-            {
-                    transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                }
-
-        oldposition = transform.position.x;
-
-      if (attacking)
         {
-           
+            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+        }
+
+        //Moving Right
+        if (transform.position.x < oldposition)
+        {
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        }
+
+
+        //  }
+        oldposition = transform.position.x;
+        if (attacking)
+        {
+
             Debug.Log("enemy attack made");
             timer += Time.deltaTime;
 
             if (timer >= timeToAttack)
             {
                 timer = 0;
-                m_animator.SetTrigger("Attack");
+                //m_animator.SetTrigger("Attack");
                 attacking = false;
-                swordArea.SetActive(attacking);
+                // swordArea.SetActive(attacking);
             }
         }
 
-      if (Vector3.Distance(target.position, transform.position) <= attackRadius && attacking == false)
+        if (Vector3.Distance(target.position, transform.position) <= attackRadius && attacking == false)
         {
-            
             Attack();
-           // attacking = true;
             Debug.Log("enemy attack made");
         }
 
         // -- Handle Animations --
 
         //Death
-        if (Input.GetKeyDown("e")) {
-            if(!m_isDead)
+        if (Input.GetKeyDown("e"))
+        {
+            if (!m_isDead)
                 m_animator.SetTrigger("Death");
             else
                 m_animator.SetTrigger("Recover");
@@ -87,28 +89,28 @@ public class Bandit : Enemy {
         }
 
         //Hurt
-     //   else if (banditHP.GetHealth())
-     //       m_animator.SetTrigger("Hurt");
-               
-        //Combat Idle
-      /*  else if (m_combatIdle)
-            m_animator.SetInteger("AnimState", 1);
+        //   else if (banditHP.GetHealth())
+        //       m_animator.SetTrigger("Hurt");
 
-        //Idle
-        else
-            m_animator.SetInteger("AnimState", 0);
-      */
+        //Combat Idle
+        /*  else if (m_combatIdle)
+              m_animator.SetInteger("AnimState", 1);
+
+          //Idle
+          else
+              m_animator.SetInteger("AnimState", 0);
+        */
     }
 
-   private void DeathAnimation()
+    private void DeathAnimation()
     {
         Health enemyHP = GetComponent<Health>();
         if (enemyHP.GetHealth() == 0)
-            {
+        {
             m_isDead = true;
             m_animator.SetTrigger("Death");
-            }
-        
+        }
+
     }
     void CheckDistance()
     {
@@ -129,18 +131,7 @@ public class Bandit : Enemy {
     private void Attack()
     {
         attacking = true;
+        m_animator.SetTrigger("Attack");
 
-        if (attacking)
-        {
-            m_animator.SetTrigger("Attack");
-            timer += Time.deltaTime;
-
-            if (timer >= timeToAttack)
-            {
-                timer = 0;
-                attacking = false;
-                swordArea.SetActive(attacking);
-            }
-        }
     }
 }
