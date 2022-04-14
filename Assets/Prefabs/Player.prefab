@@ -230,6 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   animator: {fileID: 8482568505135529970}
+  hp: {fileID: 389985014457424374}
 --- !u!61 &8814845040253258715
 BoxCollider2D:
   m_ObjectHideFlags: 0
