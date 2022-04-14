@@ -14,6 +14,7 @@ public class PlayerBehavior : MonoBehaviour
     private Vector3 movement;
     private int targetDoor;
     public Animator animator;
+    public Health hp;
     //[SerializeField] private int hp = 10;
 
 
@@ -54,6 +55,11 @@ public class PlayerBehavior : MonoBehaviour
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
         }
 
+
+        if(hp.GetHealth() <= 0)
+        {
+            animator.SetTrigger("Death");
+        }
     }
 
 
