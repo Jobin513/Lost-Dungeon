@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour
 
     public GameObject swordArea;
     public GameObject shieldArea;
-    public Transform attackPoint;
+    
 
     private bool attacking = false;
     private float timeToAttack = .5f;
@@ -37,7 +37,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -67,6 +67,8 @@ public class PlayerAttack : MonoBehaviour
             {
                 timer = 0;
                 attacking = false;
+                swordArea.SetActive(false);
+                shieldArea.SetActive(false);
                 //attackArea.SetActive(attacking);
             }
         }
@@ -102,7 +104,7 @@ public class PlayerAttack : MonoBehaviour
         if (sword == true)
         {
             animator.SetTrigger("Attack1");
-            swordArea.SetActive(attacking);
+            swordArea.SetActive(true);
             
             
         }
@@ -113,7 +115,7 @@ public class PlayerAttack : MonoBehaviour
         else if (shield == true)
         {
             animator.SetTrigger("Block");
-            shieldArea.SetActive(attacking);
+            shieldArea.SetActive(true);
             
         }
         
