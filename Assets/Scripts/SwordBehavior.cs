@@ -7,7 +7,7 @@ public class SwordBehavior : MonoBehaviour
     private int damage = 2;
 
 
-    private void OnTriggerEnter2D(CapsuleCollider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<Health>() != null)
         {
