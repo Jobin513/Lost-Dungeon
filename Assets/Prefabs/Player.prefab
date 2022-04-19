@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordArea: {fileID: 2833955732882279726, guid: 00e5a0c1e88b5c94885f4c590103a246, type: 3}
-  shieldArea: {fileID: 0}
+  shieldArea: {fileID: 4087889746785729839}
   attackPoint: {fileID: 0}
   animator: {fileID: 8482568505135529970}
   arrowPrefab: {fileID: 3257242134636382511, guid: d01b32a0f6f645540a29343877e6afaa, type: 3}
