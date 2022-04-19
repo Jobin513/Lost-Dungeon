@@ -103,7 +103,7 @@ public class PlayerAttack : MonoBehaviour
         {
             animator.SetTrigger("Attack1");
             swordArea.SetActive(attacking);
-
+            
             
         }
         else if (bow == true)
@@ -114,6 +114,7 @@ public class PlayerAttack : MonoBehaviour
         {
             animator.SetTrigger("Block");
             shieldArea.SetActive(attacking);
+            
         }
         
     }
