@@ -4,7 +4,7 @@ using System.Collections;
 public class Bandit : Enemy
 {
 
-    //[SerializeField] float m_speed = 4.0f;
+    [SerializeField] float m_speed = 4.0f;
 
     public GameObject swordArea;
     public Transform target;
@@ -17,8 +17,7 @@ public class Bandit : Enemy
     private Animator m_animator;
     private Rigidbody2D m_body2d;
 
-    private float timeToAttack = .5f;
-    private float attackWindow = 2f;
+    private float timeToAttack = 1.25f;
     private float timer = 0f;
     private float oldposition;
     private Vector3 initialPosition;
@@ -26,7 +25,7 @@ public class Bandit : Enemy
     // Use this for initialization
     void Start()
     {
-        maxhp = hp.GetHealth();
+       maxhp = hp.GetHealth();
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         target = GameObject.FindWithTag("Player").transform;
@@ -38,12 +37,17 @@ public class Bandit : Enemy
     void FixedUpdate()
     {
         CheckDistance();
-        Attack();
+
         OnCollisionEnter2D();
 
-        // -- Handle Animations --
+        if (Vector3.Distance(target.position, transform.position) <= attackRadius && attacking == false)
+        {
+            Attack();
+            Debug.Log("enemy attack made");
+        }
+            // -- Handle Animations --
 
-        if (hp.GetHealth() <= 0)
+            if (hp.GetHealth() <= 0)
         {
             m_animator.SetTrigger("Death");
         }
@@ -66,7 +70,7 @@ public class Bandit : Enemy
         {
             timer += Time.deltaTime;
 
-          if (timer >= attackWindow)
+          if (timer >= timeToAttack)
             {
               timer = 0;
               swordArea.SetActive(false);
@@ -75,20 +79,17 @@ public class Bandit : Enemy
         }
 
     }
-
     private void OnCollisionEnter2D()
     {
         if (hp.GetHealth() < maxhp)
         {
             maxhp = hp.GetHealth();
-            animator.SetTrigger("Hurt");
+            m_animator.SetTrigger("Hurt");
         }
     }
-
     void Attack()
     {
-        if (Vector3.Distance(target.position, transform.position) <= attackRadius && attacking == false)
-        {
+       
             timer += Time.deltaTime;
             if (timer <= timeToAttack)
             {
@@ -97,11 +98,10 @@ public class Bandit : Enemy
                 m_animator.SetTrigger("Attack");
                
                 timer = 0;
-                Debug.Log("enemy attack made");
+               
             }
         }
-        
-    }
+     
     void CheckDistance()
     {
         if (hp.GetHealth() > 0)
@@ -110,7 +110,7 @@ public class Bandit : Enemy
             if (Vector3.Distance(target.position, transform.position) <= chaseRadius
                 && Vector3.Distance(target.position, transform.position) > attackRadius)
             {
-                transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, target.position, m_speed * Time.deltaTime);
                 m_animator.SetInteger("AnimState", 2);               
             }
 

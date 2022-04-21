@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb93d877db899f149806f20f5876c630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 2
 --- !u!1 &8814845040253258719
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
+  maxhp: 0
   animator: {fileID: 8482568505135529970}
   hp: {fileID: 389985014457424374}
 --- !u!61 &8814845040253258715
@@ -361,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a064f6917e40c1a4c964afce531b935d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 10
+  hp: 15
 --- !u!95 &8482568505135529970
 Animator:
   serializedVersion: 4

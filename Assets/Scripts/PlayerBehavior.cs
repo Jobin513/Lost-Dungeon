@@ -8,7 +8,7 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private float speed = 4f;
     // private float horizontalMovement;
     // private float verticalMovement;
-
+    public int maxhp;
     private int direction;
     private Rigidbody2D rb;
     private Vector3 movement;
@@ -21,7 +21,7 @@ public class PlayerBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        maxhp = hp.GetHealth();
         Application.targetFrameRate = 60;
         rb = GetComponent<Rigidbody2D>();
 
@@ -33,6 +33,13 @@ public class PlayerBehavior : MonoBehaviour
         movement = Vector3.zero;
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+
+       if(maxhp > hp.GetHealth())
+        {
+            maxhp = hp.GetHealth();
+            animator.SetTrigger("Hurt");
+        }
+
         if (hp.GetHealth() > 0)
         {
             if (movement != Vector3.zero)
@@ -56,8 +63,6 @@ public class PlayerBehavior : MonoBehaviour
                 gameObject.transform.localScale = new Vector3(-1, 1, 1);
             }
         }
-      
-
 
       if(hp.GetHealth() <= 0)
         {
@@ -67,8 +72,6 @@ public class PlayerBehavior : MonoBehaviour
 
         }
     }
-
-
 
     public int getDirection()
     {
@@ -84,9 +87,7 @@ public class PlayerBehavior : MonoBehaviour
         }       
     }
 
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
+   private void OnCollisionEnter2D(Collision2D collision)
     {
         if ((collision.gameObject.tag == "Enemy") & hp.GetHealth() > 0)
         {
