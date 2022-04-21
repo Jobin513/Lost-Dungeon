@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour
 
     public GameObject swordArea;
     public GameObject shieldArea;
-    
+    public Health hp;
 
     private bool attacking = false;
     private float timeToAttack = .5f;
@@ -39,23 +39,26 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (hp.GetHealth() > 0)
         {
-            SetWeapon(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SetWeapon(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SetWeapon(3);
-        }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetWeapon(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SetWeapon(2);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SetWeapon(3);
+            }
 
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && attacking == false)
-        {
-            Attack();
-            Debug.Log("attack made");
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && attacking == false)
+            {
+                Attack();
+                Debug.Log("attack made");
+            }
         }
 
         if (attacking)

@@ -345,6 +345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   swordArea: {fileID: 4378600953775580136}
   shieldArea: {fileID: 4087889746785729839}
+  hp: {fileID: 389985014457424374}
   animator: {fileID: 8482568505135529970}
   arrowPrefab: {fileID: 3257242134636382511, guid: d01b32a0f6f645540a29343877e6afaa, type: 3}
   arrowOffset: {fileID: 136647264661535726}
@@ -393,5 +394,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78510d6401e875d45926b39b4366d88a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 4
+  thrust: 5.5
   knockTime: 0.4

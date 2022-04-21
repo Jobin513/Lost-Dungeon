@@ -24,7 +24,7 @@ public class PlayerBehavior : MonoBehaviour
         
         Application.targetFrameRate = 60;
         rb = GetComponent<Rigidbody2D>();
-        
+
     }
 
     // Update is called once per frame
@@ -33,32 +33,38 @@ public class PlayerBehavior : MonoBehaviour
         movement = Vector3.zero;
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+        if (hp.GetHealth() > 0)
+        {
+            if (movement != Vector3.zero)
+            {
+                //animator.SetFloat("Run", movement);
+                movePlayer();
+            }
+            else
+            {
+                animator.SetInteger("AnimState", 0);
+            }
 
-        if (movement != Vector3.zero)
-        {
-            //animator.SetFloat("Run", movement);
-            movePlayer();
+            if (movement.x > 0)
+            {
+                direction = 1;
+                gameObject.transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (movement.x < 0)
+            {
+                direction = -1;
+                gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            }
         }
-        else
-        {
-            animator.SetInteger("AnimState", 0);
-        }
-
-        if (movement.x > 0)
-        {
-            direction = 1;
-            gameObject.transform.localScale = new Vector3(1, 1, 1);
-        }
-        else if(movement.x < 0)
-        {
-            direction = -1;
-            gameObject.transform.localScale = new Vector3(-1, 1, 1);
-        }
+      
 
 
-        if(hp.GetHealth() <= 0)
+      if(hp.GetHealth() <= 0)
         {
+            movement = Vector3.zero;
             animator.SetTrigger("Death");
+            this.enabled = false;
+
         }
     }
 
@@ -71,19 +77,22 @@ public class PlayerBehavior : MonoBehaviour
 
     void movePlayer()
     {
-        animator.SetInteger("AnimState", 1);
-        rb.MovePosition(transform.position + movement * speed * Time.fixedDeltaTime);
-
+        if (hp.GetHealth() > 0)
+        {
+            animator.SetInteger("AnimState", 1);
+            rb.MovePosition(transform.position + movement * speed * Time.fixedDeltaTime);
+        }       
     }
 
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if ((collision.gameObject.tag == "Enemy"))
+        if ((collision.gameObject.tag == "Enemy") & hp.GetHealth() > 0)
         {
             Health playerHP = GetComponent<Health>();
             playerHP.Damage(1);
+            animator.SetTrigger("Hurt");
         }
     }
 

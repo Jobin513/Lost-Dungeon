@@ -4,19 +4,21 @@ using System.Collections;
 public class Bandit : Enemy
 {
 
-    [SerializeField] float m_speed = 4.0f;
+    //[SerializeField] float m_speed = 4.0f;
 
     public GameObject swordArea;
     public Transform target;
     public float chaseRadius;
     public float attackRadius;
     public Transform homePosition;
-
+    public Health hp;
+    public int maxhp;
     private bool attacking = false;
     private Animator m_animator;
     private Rigidbody2D m_body2d;
-    private bool m_isDead = false;
-    private float timeToAttack = 1.5f;
+
+    private float timeToAttack = .5f;
+    private float attackWindow = 2f;
     private float timer = 0f;
     private float oldposition;
     private Vector3 initialPosition;
@@ -24,6 +26,7 @@ public class Bandit : Enemy
     // Use this for initialization
     void Start()
     {
+        maxhp = hp.GetHealth();
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         target = GameObject.FindWithTag("Player").transform;
@@ -32,12 +35,18 @@ public class Bandit : Enemy
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         CheckDistance();
-        DeathAnimation();
+        Attack();
+        OnCollisionEnter2D();
 
-        // if (m_body2d.isKinematic == true) {
+        // -- Handle Animations --
+
+        if (hp.GetHealth() <= 0)
+        {
+            m_animator.SetTrigger("Death");
+        }
 
         // Moving Left
         if (transform.position.x > oldposition)
@@ -51,87 +60,65 @@ public class Bandit : Enemy
             transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
 
-
-        //  }
         oldposition = transform.position.x;
+
         if (attacking)
         {
-
-            Debug.Log("enemy attack made");
             timer += Time.deltaTime;
 
-            if (timer >= timeToAttack)
+          if (timer >= attackWindow)
             {
-                timer = 0;
-                //m_animator.SetTrigger("Attack");
-                attacking = false;
-                // swordArea.SetActive(attacking);
+              timer = 0;
+              swordArea.SetActive(false);
+              attacking = false;
             }
         }
 
-        if (Vector3.Distance(target.position, transform.position) <= attackRadius && attacking == false)
-        {
-            Attack();
-            Debug.Log("enemy attack made");
-        }
-
-        // -- Handle Animations --
-
-        //Death
-        if (Input.GetKeyDown("e"))
-        {
-            if (!m_isDead)
-                m_animator.SetTrigger("Death");
-            else
-                m_animator.SetTrigger("Recover");
-
-            m_isDead = !m_isDead;
-        }
-
-        //Hurt
-        //   else if (banditHP.GetHealth())
-        //       m_animator.SetTrigger("Hurt");
-
-        //Combat Idle
-        /*  else if (m_combatIdle)
-              m_animator.SetInteger("AnimState", 1);
-
-          //Idle
-          else
-              m_animator.SetInteger("AnimState", 0);
-        */
     }
 
-    private void DeathAnimation()
+    private void OnCollisionEnter2D()
     {
-        Health enemyHP = GetComponent<Health>();
-        if (enemyHP.GetHealth() == 0)
+        if (hp.GetHealth() < maxhp)
         {
-            m_isDead = true;
-            m_animator.SetTrigger("Death");
+            maxhp = hp.GetHealth();
+            animator.SetTrigger("Hurt");
         }
+    }
 
+    void Attack()
+    {
+        if (Vector3.Distance(target.position, transform.position) <= attackRadius && attacking == false)
+        {
+            timer += Time.deltaTime;
+            if (timer <= timeToAttack)
+            {
+                attacking = true;
+                swordArea.SetActive(true);
+                m_animator.SetTrigger("Attack");
+               
+                timer = 0;
+                Debug.Log("enemy attack made");
+            }
+        }
+        
     }
     void CheckDistance()
     {
-        //If player is in chase radius follow the player
-        if (Vector3.Distance(target.position, transform.position) <= chaseRadius
-            && Vector3.Distance(target.position, transform.position) > attackRadius)
+        if (hp.GetHealth() > 0)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, m_speed * Time.deltaTime);
-            m_animator.SetInteger("AnimState", 2);
+            //If player is in chase radius follow the player
+            if (Vector3.Distance(target.position, transform.position) <= chaseRadius
+                && Vector3.Distance(target.position, transform.position) > attackRadius)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+                m_animator.SetInteger("AnimState", 2);               
+            }
 
+            //If player is past the chaseradius go back to idle animation
+            if (Vector3.Distance(target.position, transform.position) >= chaseRadius)
+            {
+                m_animator.SetInteger("AnimState", 1);
+            }
         }
-        //If player is past the chaseradius go back to idle animation
-        if (Vector3.Distance(target.position, transform.position) >= chaseRadius)
-        {
-            m_animator.SetInteger("AnimState", 1);
-        }
-    }
-    private void Attack()
-    {
-        attacking = true;
-        m_animator.SetTrigger("Attack");
-
     }
 }

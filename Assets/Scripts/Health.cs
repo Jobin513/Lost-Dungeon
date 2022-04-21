@@ -15,7 +15,7 @@ public class Health : MonoBehaviour
         
 
         if (hp <= 0)
-        {          
+        {
             Debug.Log("character died");
             elapsedTime += Time.deltaTime;
             if (elapsedTime >= timeLimit)
