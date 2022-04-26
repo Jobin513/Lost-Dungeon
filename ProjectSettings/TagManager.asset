@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - EnemyAttack
   - Death
+  - Heart
   layers:
   - Default
   - TransparentFX

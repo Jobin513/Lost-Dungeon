@@ -9,6 +9,7 @@ public class PlayerBehavior : MonoBehaviour
     // private float horizontalMovement;
     // private float verticalMovement;
     public int maxhp;
+    public int currenthp;
     private int direction;
     private Rigidbody2D rb;
     private Vector3 movement;
@@ -22,6 +23,7 @@ public class PlayerBehavior : MonoBehaviour
     void Start()
     {
         maxhp = hp.GetHealth();
+        currenthp = hp.GetHealth();
         Application.targetFrameRate = 60;
         rb = GetComponent<Rigidbody2D>();
 
@@ -34,9 +36,9 @@ public class PlayerBehavior : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-       if(maxhp > hp.GetHealth())
+       if(currenthp > hp.GetHealth())
         {
-            maxhp = hp.GetHealth();
+            currenthp = hp.GetHealth();
             animator.SetTrigger("Hurt");
         }
 
@@ -94,6 +96,19 @@ public class PlayerBehavior : MonoBehaviour
             Health playerHP = GetComponent<Health>();
             playerHP.Damage(1);
             animator.SetTrigger("Hurt");
+        }
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Heart" & hp.GetHealth() < maxhp)
+        {
+            Health playerHP = GetComponent<Health>();
+            int newhp = playerHP.GetHealth() + 1;
+            playerHP.SetHealth(newhp);
+            Debug.Log("Health Picked Up");
+           // if (collision.gameObject.name == "Heart")
+                Destroy(collision.gameObject);
         }
     }
 

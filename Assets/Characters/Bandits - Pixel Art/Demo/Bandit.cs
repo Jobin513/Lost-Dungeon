@@ -55,13 +55,13 @@ public class Bandit : Enemy
         // Moving Left
         if (transform.position.x > oldposition)
         {
-            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);        
         }
 
         //Moving Right
         if (transform.position.x < oldposition)
         {
-            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+          transform.localScale = new Vector3(1.0f, 1.0f, 1.0f); 
         }
 
         oldposition = transform.position.x;
@@ -79,7 +79,9 @@ public class Bandit : Enemy
         }
 
     }
-    private void OnCollisionEnter2D()
+    
+
+private void OnCollisionEnter2D()
     {
         if (hp.GetHealth() < maxhp)
         {
