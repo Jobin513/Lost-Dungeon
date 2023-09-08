@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 public class ScoreManager : MonoBehaviour
 {
-    public static TMP_Text scoreText;
+    [SerializeField]
+    private TMP_Text scoreText;
     public static TMP_Text highscoreText;
     public static ScoreManager instance;
     public static int score = 0;
@@ -14,14 +15,20 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        // Ensure that only one instance of ScoreManager exists
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // Mark the GameObject as persistent
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicate instances
+        }
     }
     private  void Start()
     {
-
-        highscore = PlayerPrefs.GetInt("highscore", 0);
         scoreText.text = displayscore.ToString() + " POINTS";
-        highscoreText.text = "HIGHSCORE: " + highscore.ToString();
     }
   
     // Start is called before the first frame update
@@ -29,13 +36,16 @@ public class ScoreManager : MonoBehaviour
     {
         score += 1;
         displayscore += 1;
-        scoreText.text = score + " POINTS";
-        if (highscore < score)
-            PlayerPrefs.SetInt("highscore", score);
+       
     }
   
-    public int GetScore()
+    public void GetScore()
     {
-        return score;
+        scoreText.text = score + " POINTS";
+    }
+
+    private void Update()
+    {
+        GetScore();
     }
 }

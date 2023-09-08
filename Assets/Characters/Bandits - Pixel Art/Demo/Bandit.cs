@@ -13,6 +13,7 @@ public class Bandit : Enemy
     public Transform homePosition;
     public Health hp;
     public int maxhp;
+    public ScoreManager score;
     private bool attacking = false;
     private Animator m_animator;
     private Rigidbody2D m_body2d;
@@ -49,7 +50,9 @@ public class Bandit : Enemy
 
             if (hp.GetHealth() <= 0)
         {
+            
             m_animator.SetTrigger("Death");
+            score.AddPoint();
         }
 
         // Moving Left
